@@ -6,7 +6,7 @@
 /*   By: gkehren <gkehren@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 20:55:21 by gkehren           #+#    #+#             */
-/*   Updated: 2022/04/14 00:48:05 by gkehren          ###   ########.fr       */
+/*   Updated: 2022/04/14 01:28:26 by gkehren          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ char	*get_line(char *file)
 char	*get_new_file(char *file)
 {
 	int		i;
-	int		j;
 	char	*temp;
 
 	i = 0;
@@ -81,11 +80,7 @@ char	*get_new_file(char *file)
 	temp = (char *)malloc(sizeof(char) * (ft_strlen(file) - i + 1));
 	if (!temp)
 		return (NULL);
-	i++;
-	j = 0;
-	while (file[i])
-		temp[j++] = file[i++];
-	temp[j] = '\0';
+	temp = ft_strcpy(temp, file+i+1);
 	free(file);
 	return (temp);
 }
@@ -124,4 +119,5 @@ int	main()
 	}
 	close(fd);
 	return (0);
-}*/
+}
+*/
