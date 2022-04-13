@@ -6,48 +6,103 @@
 /*   By: gkehren <gkehren@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 20:55:21 by gkehren           #+#    #+#             */
-/*   Updated: 2022/04/13 02:44:55 by gkehren          ###   ########.fr       */
+/*   Updated: 2022/04/14 00:48:05 by gkehren          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*get_line(int fd)
+char	*get_read_line(int fd, char *file)
 {
 	char	*line;
-	char	*temp;
-	int		i;
+	int		bytes;
 
-	temp = (char *)malloc(sizeof(char) * BUFFER_SIZE);
-	line = (char *)malloc(sizeof(char));
-	while (ft_strchr(temp, '\n') == 0)
+	bytes = 1;
+	line = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (!line)
+		return (NULL);
+	while (ft_strchr(file, '\n') == 0 && bytes != 0)
 	{
-		read(fd, temp, BUFFER_SIZE);
-		if (ft_strchr(temp, '\n') == 0)
-			line = ft_strjoin(line, temp);
+		bytes = read(fd, line, BUFFER_SIZE);
+		if (bytes == -1)
+		{
+			free(line);
+			return (NULL);
+		}
+		line[bytes] = '\0';
+		file = ft_strjoin(file, line);
 	}
-	if (ft_strchr(temp, '\n') == 1)
-		line = ft_strjoin(line, temp);
+	free(line);
+	return (file);
+}
+
+char	*get_line(char *file)
+{
+	int		i;
+	char	*temp;
+
 	i = 0;
-	while (line[i] != '\0')
+	if (!file[i])
+		return (NULL);
+	while (file[i] != '\n' && file[i] != '\0')
+		i++;
+	temp = (char *)malloc(sizeof(char) * i + 2);
+	if (!file)
+		return (NULL);
+	i = 0;
+	while (file[i] != '\n' && file[i] != '\0')
 	{
-		if (line[i] == '\n')
-			line[i + 1] = '\0';
+		temp[i] = file[i];
 		i++;
 	}
-	free(temp);
-	return (line);
+	if (file[i] == '\n')
+	{
+		temp[i] = file[i];
+		i++;
+	}
+	temp[i] = '\0';
+	return (temp);
+}
+
+char	*get_new_file(char *file)
+{
+	int		i;
+	int		j;
+	char	*temp;
+
+	i = 0;
+	while (file[i] != '\0' && file[i] != '\n')
+		i++;
+	if (!file[i])
+	{
+		free(file);
+		return (NULL);
+	}
+	temp = (char *)malloc(sizeof(char) * (ft_strlen(file) - i + 1));
+	if (!temp)
+		return (NULL);
+	i++;
+	j = 0;
+	while (file[i])
+		temp[j++] = file[i++];
+	temp[j] = '\0';
+	free(file);
+	return (temp);
 }
 
 char	*get_next_line(int fd)
 {
-	char	*c;
+	char		*line;
+	static char	*file;
 
-	if (fd == -1)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	c = (char *)malloc(sizeof(char) * BUFFER_SIZE);
-	c = get_line(fd);
-	return (c);
+	file = get_read_line(fd, file);
+	if (!file)
+		return (NULL);
+	line = get_line(file);
+	file = get_new_file(file);
+	return (line);
 }
 /*
 #include <sys/types.h>
@@ -57,7 +112,16 @@ char	*get_next_line(int fd)
 int	main()
 {
 	int	fd;
+	char *line;
+	int i = 1;
 	fd = open("test.txt", O_RDONLY);
-	printf("%s\n", get_next_line(fd));
+	while (i < 4)
+	{
+		line = get_next_line(fd);
+		printf("line %d: %s", i, line);
+		free(line);
+		i++;
+	}
+	close(fd);
 	return (0);
 }*/
