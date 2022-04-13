@@ -6,13 +6,13 @@
 /*   By: gkehren <gkehren@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 20:55:18 by gkehren           #+#    #+#             */
-/*   Updated: 2022/04/13 21:50:18 by gkehren          ###   ########.fr       */
+/*   Updated: 2022/04/14 00:51:08 by gkehren          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t	ft_strlen(const char *s)
+size_t	ft_strlen(char *s)
 {
 	size_t	i;
 

@@ -6,7 +6,7 @@
 /*   By: gkehren <gkehren@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 20:55:23 by gkehren           #+#    #+#             */
-/*   Updated: 2022/04/13 21:36:39 by gkehren          ###   ########.fr       */
+/*   Updated: 2022/04/14 00:52:25 by gkehren          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,11 @@
 # include <stdlib.h>
 
 char	*get_next_line(int fd);
-char	*ft_strcpy(char *dst, const char *src);
+char	*get_new_file(char *file);
+char	*get_line(char *file);
+char	*get_read_line(int fd, char *file);
+size_t	ft_strlen(char *s);
 int		ft_strchr(char *s, int c);
-size_t	ft_strlen(const char *s);
 char	*ft_strjoin(char *s1, char *s2);
 
 # ifndef BUFFER_SIZE
