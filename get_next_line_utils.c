@@ -5,24 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: gkehren <gkehren@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/12 20:55:18 by gkehren           #+#    #+#             */
-/*   Updated: 2022/04/14 01:28:23 by gkehren          ###   ########.fr       */
+/*   Created: 2022/04/14 18:13:05 by gkehren           #+#    #+#             */
+/*   Updated: 2022/04/14 18:40:49 by gkehren          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-size_t	ft_strlen(char *s)
-{
-	size_t	i;
-
-	i = 0;
-	if (!s)
-		return (0);
-	while (s[i] != '\0')
-		i++;
-	return (i);
-}
 
 char	*ft_strcpy(char *dst, char *src)
 {
@@ -38,22 +26,16 @@ char	*ft_strcpy(char *dst, char *src)
 	return (dst);
 }
 
-int	ft_strchr(char *s, int c)
+size_t	ft_strlen(char *s)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
 	if (!s)
 		return (0);
 	while (s[i] != '\0')
-	{
-		if (s[i] == (char)c)
-			return (1);
 		i++;
-	}
-	if (c == '\0' && s[i] == '\0')
-		return (1);
-	return (0);
+	return (i);
 }
 
 char	*ft_strjoin(char *s1, char *s2)
@@ -82,4 +64,22 @@ char	*ft_strjoin(char *s1, char *s2)
 	str[i] = '\0';
 	free(s1);
 	return (str);
+}
+
+int	ft_strchr(char *s, int c)
+{
+	int	i;
+
+	i = 0;
+	if (!s)
+		return (0);
+	while (s[i] != '\0')
+	{
+		if (s[i] == (char)c)
+			return (1);
+		i++;
+	}
+	if (c == '\0' && s[i] == '\0')
+		return (1);
+	return (0);
 }
